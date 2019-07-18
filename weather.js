@@ -1,32 +1,49 @@
-let key = "wP5GLRzcTr7X5zzJaxiKN3poepQ5cJQm";
-let weatherURL = "https://dataservice.accuweather.com/currentconditions/v1/";
-let cityURL = "https://dataservice.accuweather.com/locations/v1/cities/search";
 
-searchUrl =
-  "http://dataservice.accuweather.com/forecasts/v1/daily/5day/49564?apikey=" +
-  key +
-  "&metric=true";
+function getWeather() {
 
-fetch(searchUrl)
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-    apiArray = data.list;
-  });
+  const details = document.querySelector('.card-body');
 
-  const updateUI = data => {
-    // Object Destructuring
-    const { cityDetails, weather } = data;
-  
-    // Update weather details
-    details.innerHTML = `
-      <h3 class="card-title">${cityDetails.EnglishName}</h3>
-      <div class="card-text">
-          <h5>${weather.WeatherText}</h5>
-          <div class="display-4 my-4">
-              <span>${weather.Temperature.Metric.Value}</span>
-              <span>&deg;C</span>
-          </div>
-      </div>
-      `;
-  }
+
+  let key = "wP5GLRzcTr7X5zzJaxiKN3poepQ5cJQm";
+  let weatherURL = "https://dataservice.accuweather.com/currentconditions/v1/";
+  let cityURL =
+    "https://dataservice.accuweather.com/locations/v1/cities/search";
+
+  searchUrl =
+    "http://dataservice.accuweather.com/forecasts/v1/daily/5day/49564?apikey=" +
+    key +
+    "&metric=true";
+
+  fetch(searchUrl)
+    .then(function(responce)  {
+      return responce.json()
+    })
+    .then(function(json)  {
+     const dailyForecastsArray = json.DailyForecasts;
+
+      const daySummaryArray = [];
+      for (const day of dailyForecastsArray) {
+        const epochDate = day.EpochDate;
+        const dayIconCode = day.Day.Icon;
+        const dayIconPhrase = day.Day.IconPhrase;
+        const nightIconCode = day.Night.Icon;
+        const nightIconPhrase = day.Night.IconPhrase;
+        const highTemp = day.Temperature.Maximum.Value;
+        const lowTemp = day.Temperature.Minimum.Value;
+
+        const daySummary = {
+          epochDate,
+          dayIconCode,
+          dayIconPhrase,
+          nightIconCode,
+          nightIconPhrase,
+          highTemp,
+          lowTemp
+        };
+        console.log(daySummary)
+
+        daySummaryArray.push(daySummary)
+
+      }   return daySummaryArray
+    });
+}

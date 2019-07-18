@@ -4,43 +4,54 @@
     <title>Justins Node Weather App</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport"content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
     <script src="weather.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
-      <header>
-        <div>
-          <h1>Justins Node Weather</h1>
-          <hr />
-          <!-- <form>
+    <header>
+      <div>
+        <h1>Justins Node Weather</h1>
+        <hr />
+        <!-- <form>
             <div>
               <label for="city" class=" lead text-secondary">Enter the location for weather information</label>
               <input id="city" name="city" type="text"/>
             </div>
           </form> -->
-        </div>
-      </header>
-      <section>
-        <div>
-          <!-- <div> night/day img -->
-            <div>
-              <!-- Icon -->
-              <img src="icons/18.svg" alt="Icon" />
-            </div>
-            <div>
-              <h2>Kitchener</h2>
-              <div>
-                <h3>Hurricane</h3>
-                <div>
-                  <span>+56</span>
-                  <span>&deg;C</span>
-                </div>
-                <img src="gifs/hurricane.gif" alt="Placeholder"class='images'/>
+      </div>
+      <script>
+        getWeather();
+      </script>
+    </header>
+
+  
+    <section id="displayWeather" class="my-3 d-none">
+      <div class="container">
+        <div class="card shadow-lg rounded">
+          <div class="icon bg-light mx-auto text-center">
+            <img src="icons/5.svg" alt="Icon" />
+          </div>
+          <div class="card-body text-secondary text-center text-uppercase">
+            <h3 class="card-title">Kitchener</h3>
+            <div class="card-text">
+              <h5>Weather Condition</h5>
+              <div class="display-4 my-4">
+                <span>Temp</span>
+                <span>&deg;C</span>
               </div>
-            </div>
+                <img
+                  src="gifs/hurricane.gif"
+                  alt="Placeholder"
+                  class="images"
+                />
+              </div>
           </div>
         </div>
-      </section>
-    </body>
+      </div>
+    </section>
+  </body>
 </html>
