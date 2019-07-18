@@ -1,9 +1,4 @@
 
-function getWeather() {
-
-  const details = document.querySelector('.card-body');
-
-
   let key = "wP5GLRzcTr7X5zzJaxiKN3poepQ5cJQm";
   let weatherURL = "https://dataservice.accuweather.com/currentconditions/v1/";
   let cityURL =
@@ -15,11 +10,11 @@ function getWeather() {
     "&metric=true";
 
   fetch(searchUrl)
-    .then(function(responce)  {
-      return responce.json()
+    .then(function(responce) {
+      return responce.json();
     })
-    .then(function(json)  {
-     const dailyForecastsArray = json.DailyForecasts;
+    .then(function(json) {
+      const dailyForecastsArray = json.DailyForecasts;
 
       const daySummaryArray = [];
       for (const day of dailyForecastsArray) {
@@ -40,10 +35,12 @@ function getWeather() {
           highTemp,
           lowTemp
         };
-        console.log(daySummary)
+        console.log(daySummary);
 
-        daySummaryArray.push(daySummary)
-
-      }   return daySummaryArray
+        daySummaryArray.push(daySummary);
+      }
+      return daySummaryArray;
     });
-}
+
+const fiveDayContainer = document.getElementById("five_day_container2");
+
