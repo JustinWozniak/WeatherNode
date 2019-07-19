@@ -43,21 +43,26 @@ fetch(searchUrl)
     for (const dayCardData of fiveDayArray) {
       const dayName = dayCardData.epochDate;
       const daytimeIconCode = dayCardData.dayIconCode;
+      const daytimeWeatherPhrase = dayCardData.dayIconPhrase;
+      const nighttimeWeatherPhrase = dayCardData.nightIconPhrase;
       const nighttimeIconCode = dayCardData.nightIconCode;
-      const highTemp = dayCardData.highTemp;
-      const lowTemp = dayCardData.lowTemp;
+      const highTemp = Math.round(dayCardData.highTemp);
+      const lowTemp = Math.round(dayCardData.lowTemp);
 
 
 
       //choses the day/night icon name, then concats it with.svg.
       let timeOfDay = "";
+      let TimeOfPhrase = "";
       let date = new Date().getHours();
       if (date > 12) {
         timeOfDay = nighttimeIconCode;
+        TimeOfPhrase = nighttimeWeatherPhrase
       } else {
         timeOfDay = daytimeIconCode;
+        TimeOfPhrase = daytimeWeatherPhrase
       }
-
+      console.log(TimeOfPhrase)
       let iconCodeString = String(timeOfDay).padStart(2, "0");
       finalIconString = `${iconCodeString}.svg`;
       // console.log(finalIconString);
@@ -79,11 +84,11 @@ fetch(searchUrl)
 
       const dayCardHTML = `<div class="day_card">
                 <h2>${finalDayName}</h2>
-
                 <img class="weather_icon" src="icons/${finalIconString}" />
-
-                <p>hi: ${highTemp}°C</p>
-                <p>lo: ${lowTemp}°C</p>
+                <h2>${TimeOfPhrase} </h2>
+                <h3>hi: ${highTemp}°C</h3>
+                <h3>lo: ${lowTemp}°C</h3>
+                <hr />
             </div>`;
 
       fiveDayContainer.innerHTML += dayCardHTML;
