@@ -41,7 +41,7 @@ fetch(searchUrl)
     // for each day, render to html
     const fiveDayContainer = document.getElementById("five_day_container");
     for (const dayCardData of fiveDayArray) {
-      const dayName = dayCardData.dayName;
+      const dayName = dayCardData.epochDate;
       const daytimeIconCode = dayCardData.dayIconCode;
       const nighttimeIconCode = dayCardData.nightIconCode;
       const highTemp = dayCardData.highTemp;
@@ -60,12 +60,25 @@ fetch(searchUrl)
 
       let iconCodeString = String(timeOfDay).padStart(2, "0");
       finalIconString = `${iconCodeString}.svg`;
-      console.log(finalIconString);
-      console.log(date);
-      console.log(timeOfDay);
+      // console.log(finalIconString);
+      // console.log(date);
+      // console.log(timeOfDay);
+
+
+      const date2 = new Date(dayName*1000);
+      const dayOfWeek_Number = date2.getDay();
+      console.log(dayOfWeek_Number)
+  
+      const dayOfWeekNames = [
+              "Sunday", "Monday", "Tuesday", "Wednesday",
+              "Thursday", "Friday", "Saturday"
+          ];
+          let finalDayName = dayOfWeekNames[dayOfWeek_Number]
+          console.log(finalDayName)
+   
 
       const dayCardHTML = `<div class="day_card">
-                <h2>${dayName}</h2>
+                <h2>${finalDayName}</h2>
 
                 <img class="weather_icon" src="icons/${finalIconString}" />
 
