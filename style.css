@@ -1,7 +1,12 @@
 *   {
     text-align: center;
 }
-.images {
-    width:200px;
-    height:100px;
+.weather_icon {
+    width:20%;
+    height:20%;
+}
+
+.gifs   {
+    width:30%;
+    height:30%;
 }
