@@ -46,6 +46,10 @@ fetch(searchUrl)
       const nighttimeIconCode = dayCardData.nightIconCode;
       const highTemp = dayCardData.highTemp;
       const lowTemp = dayCardData.lowTemp;
+
+
+
+      //choses the day/night icon name, then concats it with.svg.
       let timeOfDay = "";
       let date = new Date().getHours();
       if (date > 12) {
@@ -53,13 +57,17 @@ fetch(searchUrl)
       } else {
         timeOfDay = daytimeIconCode;
       }
+
+      let iconCodeString = String(timeOfDay).padStart(2, "0");
+      finalIconString = `${iconCodeString}.svg`;
+      console.log(finalIconString);
       console.log(date);
       console.log(timeOfDay);
 
       const dayCardHTML = `<div class="day_card">
                 <h2>${dayName}</h2>
 
-                <img class="weather_icon" src="icons/${iconImage}" />
+                <img class="weather_icon" src="icons/${finalIconString}" />
 
                 <p>hi: ${highTemp}°C</p>
                 <p>lo: ${lowTemp}°C</p>
