@@ -1,3 +1,4 @@
+
 function choseDayName(dayName) {
   const date2 = new Date(dayName * 1000);
   const dayOfWeek_Number = date2.getDay();
@@ -97,21 +98,22 @@ function pickGifImage() {
 }
 
 
-
 function choseTimeOfPhrase(daytimeWeatherPhrase, daytimeWeatherPhrase) {
   //choses the day/night icon name, then concats it with.svg.
   let TimeOfPhrase = "";
   let date = new Date().getHours();
   if (date > 12) {
     TimeOfPhrase = daytimeWeatherPhrase;
+    document.body.style.backgroundImage = "url('images/day.jpg')";
   } else {
+    document.body.style.backgroundImage = "url('images/night.jpg')";
     TimeOfPhrase = daytimeWeatherPhrase;
   }
   let iconCodeString = String(timeOfDay).padStart(2, "0");
   finalIconString = `${iconCodeString}.svg`;
   // console.log(finalIconString);
   // console.log(date);
-  // console.log(timeOfDay);
+  console.log(timeOfDay);
   return TimeOfPhrase;
 }
 
@@ -152,7 +154,7 @@ let cityURL = "https://dataservice.accuweather.com/locations/v1/cities/search";
 
 searchUrl =
   "http://dataservice.accuweather.com/forecasts/v1/daily/5day/49564?apikey=" +
-  key3 +
+  key1 +
   "&details=true&metric=true";
 
 fetch(searchUrl)
@@ -172,7 +174,9 @@ fetch(searchUrl)
       const highTemp = day.Temperature.Maximum.Value;
       const lowTemp = day.Temperature.Minimum.Value;
       const realFeelHigh = day.RealFeelTemperature.Maximum.Value;
-      console.log(realFeelHigh);
+      const sunRise = day.Sun.Rise;
+      const sunSet = day.Sun.Set;
+      console.log(sunRise);
 
       const daySummary = {
         epochDate,
@@ -182,7 +186,9 @@ fetch(searchUrl)
         nightIconPhrase,
         highTemp,
         lowTemp,
-        realFeelHigh
+        realFeelHigh,
+        sunRise,
+        sunSet,
       };
       // console.log(daySummary);
 
@@ -200,6 +206,13 @@ fetch(searchUrl)
       const highTemp = Math.round(dayCardData.highTemp);
       const realFeelHighTemp = Math.round(dayCardData.realFeelHigh);
       const lowTemp = Math.round(dayCardData.lowTemp);
+      let sunRiseTime = dayCardData.sunRise;
+      const shortHandRiseTime = sunRiseTime.split("T0")
+      let sunSetTime = dayCardData.sunSet;
+      const shortHandSetTime = sunSetTime.split("T0")
+      console.log(shortHandSetTime)
+      sunRiseTime = shortHandRiseTime[1]
+      sunSetTime = shortHandSetTime[1]
 
       timeOfDay = choseDayOrNightIcion(daytimeIconCode, nighttimeIconCode);
 
@@ -218,6 +231,8 @@ fetch(searchUrl)
                 <h5>Really feels like: ${realFeelHighTemp}</h5>
                 <h3>low: ${lowTemp}°C</h3>
                 <img src="gifs/${finalGifString}" class='gifs' />
+                <h3>Sunrise: ${sunRiseTime}</h3>
+                <h3>Sunset: ${sunSetTime}</h3>
                 <hr />
             </div>`;
 
