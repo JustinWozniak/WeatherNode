@@ -32,3 +32,23 @@ h5{
     font-size: 180%;
     margin:0;
 }
+
+.blink_me {
+    color: red;
+    animation: blinker 3s linear infinite;
+  }
+  
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .rainText {
+      color: red;
+  }
+
+  .sunlightBlue {
+    color: rgb(52, 27, 141);
+
+  }

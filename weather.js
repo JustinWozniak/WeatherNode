@@ -1,4 +1,3 @@
-
 function choseDayName(dayName) {
   const date2 = new Date(dayName * 1000);
   const dayOfWeek_Number = date2.getDay();
@@ -15,20 +14,16 @@ function choseDayName(dayName) {
   ];
   let finalDayName = dayOfWeekNames[dayOfWeek_Number];
   // console.log(finalDayName);
-  return finalDayName
+  return finalDayName;
 }
-
-
 
 function pickGifImage() {
   let gifPhrase = "";
   // timeOfDay = 26;
-  // console.log(timeOfDay);
+  console.log(timeOfDay);
   switch (timeOfDay) {
     case 1:
-    case 2:
     case 3:
-    case 4:
     case 5:
     case 33:
       gifPhrase = 1; //sunny
@@ -46,6 +41,8 @@ function pickGifImage() {
     case 37:
       gifPhrase = 5; //dreary
       break;
+    case 2:
+    case 4:
     case 16:
     case 34:
     case 35:
@@ -97,12 +94,11 @@ function pickGifImage() {
   return finalGifString;
 }
 
-
 function choseTimeOfPhrase(daytimeWeatherPhrase, daytimeWeatherPhrase) {
   //choses the day/night icon name, then concats it with.svg.
   let TimeOfPhrase = "";
   let date = new Date().getHours();
-  if (date > 12) {
+  if (date < 18) {
     TimeOfPhrase = daytimeWeatherPhrase;
     document.body.style.backgroundImage = "url('images/day.jpg')";
   } else {
@@ -116,8 +112,6 @@ function choseTimeOfPhrase(daytimeWeatherPhrase, daytimeWeatherPhrase) {
   console.log(timeOfDay);
   return TimeOfPhrase;
 }
-
-
 
 function choseDayOrNightIcion(nighttimeIconCode) {
   //choses the day/night icon name, then concats it with.svg.
@@ -140,11 +134,9 @@ function choseDayOrNightIcion(nighttimeIconCode) {
   return timeOfDay;
 }
 
-
-{/* <--------------------------------------------functions end here---------------------------------------------> */}
-
-
-
+{
+  /* <--------------------------------------------functions end here---------------------------------------------> */
+}
 
 let key1 = "wP5GLRzcTr7X5zzJaxiKN3poepQ5cJQm";
 let key2 = "f1Yir8GP8jZo5oY50ubWDUaslWrjJAvF";
@@ -154,7 +146,7 @@ let cityURL = "https://dataservice.accuweather.com/locations/v1/cities/search";
 
 searchUrl =
   "http://dataservice.accuweather.com/forecasts/v1/daily/5day/49564?apikey=" +
-  key1 +
+  key2 +
   "&details=true&metric=true";
 
 fetch(searchUrl)
@@ -163,7 +155,7 @@ fetch(searchUrl)
   })
   .then(function(json) {
     const dailyForecastsArray = json.DailyForecasts;
-
+    console.log(dailyForecastsArray);
     const fiveDayArray = [];
     for (const day of dailyForecastsArray) {
       const epochDate = day.EpochDate;
@@ -176,7 +168,13 @@ fetch(searchUrl)
       const realFeelHigh = day.RealFeelTemperature.Maximum.Value;
       const sunRise = day.Sun.Rise;
       const sunSet = day.Sun.Set;
-      console.log(sunRise);
+      const longPhrase = day.Day.LongPhrase;
+      const chanceOfRain = day.Day.PrecipitationProbability;
+      const amountOfRain = day.Day.Rain.Value;
+      const airQuality = day.AirAndPollen[0].Category
+      const uvIndex = day.AirAndPollen[5].Category;
+      const hoursOfSun = day.HoursOfSun;
+      console.log(hoursOfSun);
 
       const daySummary = {
         epochDate,
@@ -189,6 +187,13 @@ fetch(searchUrl)
         realFeelHigh,
         sunRise,
         sunSet,
+        longPhrase,
+        chanceOfRain,
+        airQuality,
+        amountOfRain,
+        uvIndex,
+        hoursOfSun,
+        
       };
       // console.log(daySummary);
 
@@ -207,30 +212,43 @@ fetch(searchUrl)
       const realFeelHighTemp = Math.round(dayCardData.realFeelHigh);
       const lowTemp = Math.round(dayCardData.lowTemp);
       let sunRiseTime = dayCardData.sunRise;
-      const shortHandRiseTime = sunRiseTime.split("T0")
+      const shortHandRiseTime = sunRiseTime.split("T0");
       let sunSetTime = dayCardData.sunSet;
-      const shortHandSetTime = sunSetTime.split("T0")
-      console.log(shortHandSetTime)
-      sunRiseTime = shortHandRiseTime[1]
-      sunSetTime = shortHandSetTime[1]
+      const shortHandSetTime = sunSetTime.split("T");
+      console.log(shortHandSetTime);
+      sunRiseTime = shortHandRiseTime[1];
+      sunSetTime = shortHandSetTime[1];
+      let longPhrase = dayCardData.longPhrase;
+      let chanceOfRain = dayCardData.chanceOfRain;
+      const airQuality = dayCardData.airQuality;
+      const amountOfRain = dayCardData.amountOfRain;
+      const uvIndex = dayCardData.uvIndex;
+      const hoursOfSun = dayCardData.hoursOfSun;
 
       timeOfDay = choseDayOrNightIcion(daytimeIconCode, nighttimeIconCode);
 
-      TimeOfPhrase = choseTimeOfPhrase(daytimeWeatherPhrase,nighttimeWeatherPhrase);
+      TimeOfPhrase = choseTimeOfPhrase(
+        daytimeWeatherPhrase,
+        nighttimeWeatherPhrase
+      );
 
       finalGifString = pickGifImage();
 
-      finalDayName = choseDayName(dayName)
-    
+      finalDayName = choseDayName(dayName);
 
       const dayCardHTML = `<div class="day_card">
                 <h1>${finalDayName}</h1>
                 <img class="weather_icon" src="icons/${finalIconString}" />
+                <h2>${longPhrase} </h2>
                 <h2>${TimeOfPhrase} </h2>
                 <h3>High: ${highTemp}°C</h3>
                 <h5>Really feels like: ${realFeelHighTemp}</h5>
                 <h3>low: ${lowTemp}°C</h3>
+                <h3 class="rainText">Chance of Rain ${chanceOfRain}%   Expecting ${amountOfRain}mm today </h3>
                 <img src="gifs/${finalGifString}" class='gifs' />
+                <h3>Air Quality Today: ${airQuality}</h3>
+                <h3>UVIndex: ${uvIndex}</h3>
+                <h3 class="sunlightBlue">Hours of Sunlight today: ${hoursOfSun}</h3>
                 <h3>Sunrise: ${sunRiseTime}</h3>
                 <h3>Sunset: ${sunSetTime}</h3>
                 <hr />
