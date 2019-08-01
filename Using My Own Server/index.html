@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <meta name="description" content="" />
+  </head>
+  <body>
+    <div id="weatherClass"></div>
+
+    <script>
+      const url = new URL("http://localhost:8080/forecast.json");
+
+      fetch(url)
+        .then(response => response.json())
+        .then(responseJson => {
+          console.log(responseJson)
+          const forecastHTML = `
+                  <h1>${responseJson.dayName}</h1>
+                  
+                  <img src="icons/${responseJson.iconFile}" />
+                  
+                  <p>high: ${responseJson.highTemperatureRounded}°C</p>
+                  
+                  <p>low: ${responseJson.lowTemperatureRounded}°C</p>
+                  `;
+
+          weatherClass.innerHTML += forecastHTML;
+        }) .catch(err => {
+        response.statusCode = 500;
+        response.end(`Error: ${err}.`);
+      });;
+    </script>
+  </body>
+</html>
+

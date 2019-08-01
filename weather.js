@@ -138,6 +138,9 @@ function choseDayOrNightIcion(nighttimeIconCode) {
   /* <--------------------------------------------functions end here---------------------------------------------> */
 }
 
+let eloraCode = 55146;
+let kitchenerCode = 49564;
+
 let key1 = "wP5GLRzcTr7X5zzJaxiKN3poepQ5cJQm";
 let key2 = "f1Yir8GP8jZo5oY50ubWDUaslWrjJAvF";
 let key3 = "p5eumBP6yILniKSREfzT6jWTKG9IBopF";
@@ -145,8 +148,8 @@ let weatherURL = "https://dataservice.accuweather.com/currentconditions/v1/";
 let cityURL = "https://dataservice.accuweather.com/locations/v1/cities/search";
 
 searchUrl =
-  "http://dataservice.accuweather.com/forecasts/v1/daily/5day/49564?apikey=" +
-  key2 +
+  "http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + eloraCode + "?apikey=" +
+  key3 +
   "&details=true&metric=true";
 
 fetch(searchUrl)
